@@ -3,23 +3,23 @@ Library to make code more robust
 
 # Retry on specific exception
 
-    import retries
+    import retrylib
 
-    @retries.decorators.retry(attempts_number=3,
+    @retrylib.decorators.retry(attempts_number=3,
                             retry_on=(MyException,))
     def reliable_function():
       raise MyException()
 
 
-# Use custom function to make decision about retries
+# Use custom function
 
 
-    import retries
+    import retrylib
 
     def is_my_mistake(error):
       return isinstance(error, MyMistake)
 
-    @retries.decorators.retry(attempts_number=3,
+    @retrylib.decorators.retry(attempts_number=3,
                             retry_on=is_my_mistake)
     def reliable_function():
       raise MyMistake()
@@ -32,9 +32,9 @@ You can use following code to add retries for your custom network
 function:
 
     import requests
-    import retries
+    import retrylib
 
-    @retries.network.retry()
+    @retrylib.network.retry()
     def reliable_function():
      response = requests.get('http://localhost:5002')
      response.raise_for_status()
@@ -77,7 +77,7 @@ Global logger: you can pass specific logger to decorator
 
     LOGGER = logging.getLogger(__name__)
 
-    @retries.network.retry(logger=LOGGER)
+    @retrylib.network.retry(logger=LOGGER)
     def reliable_function():
      response = requests.get('http://localhost:5002')
      response.raise_for_status()
@@ -93,7 +93,7 @@ Object-specific logger: to use object-specific logger define method 'get_logger'
      def get_logger(self):
          return self._logger
 
-     @retries.network.retry()
+     @retrylib.network.retry()
      def my_method(self):
          pass
 
