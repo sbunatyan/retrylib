@@ -1,17 +1,23 @@
 language: python
-  - 2.7
-  - 3.5
-env:
-  - TOX_ENV_PY27=py27
-  - TOX_ENV=pep8
-  - TOX_ENV_35=py35
+matrix:
+  include:
+  - os: linux
+    dist: trusty
+    python: '2.7'
+    env: TOX_ENV=py27
+  - os: linux
+    dist: trusty
+    python: '2.7'
+    env: TOX_ENV=pep8
+  - os: linux
+    dist: trusty
+    python: '3.5'
+    env: TOX_ENV=py35
 install:
   - pip install -r requirements.txt
   - pip install -r requirements-test.txt
   - pip install tox codecov coverage
 script:
-  - if [[ $TRAVIS_PYTHON_VERSION = '2.7' ]]; then tox -e TOX_ENV_PY27; fi
-  - if [[ $TRAVIS_PYTHON_VERSION = '3.*' ]]; then tox -e TOX_ENV_35; fi
   - tox -e TOX_ENV
 after_success:
   - coverage combine
