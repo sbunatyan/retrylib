@@ -1,0 +1,14 @@
+AUTHORS
+ChangeLog
+LICENSE
+MANIFEST.in
+README.rst
+setup.cfg
+setup.py
+retrylib.egg-info/PKG-INFO
+retrylib.egg-info/SOURCES.txt
+retrylib.egg-info/dependency_links.txt
+retrylib.egg-info/not-zip-safe
+retrylib.egg-info/pbr.json
+retrylib.egg-info/requires.txt
+retrylib.egg-info/top_level.txt
