@@ -1,0 +1,11 @@
+include README.rst
+include LICENSE
+
+exclude .gitignore
+
+recursive-include etc *
+
+global-exclude *.pyc
+global-exclude *~
+
+recursive-include *.cfg README *.po *.pot
