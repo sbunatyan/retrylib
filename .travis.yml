@@ -1,17 +1,11 @@
 language: python
 matrix:
   include:
-  - os: linux
-    dist: trusty
-    python: '2.7'
+  - python: '2.7'
     env: TOX_ENV=py27
-  - os: linux
-    dist: trusty
-    python: '2.7'
+  - python: '2.7'
     env: TOX_ENV=pep8
-  - os: linux
-    dist: trusty
-    python: '3.5'
+  - python: '3.5'
     env: TOX_ENV=py35
 install:
   - pip install -r requirements.txt
