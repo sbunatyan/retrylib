@@ -84,7 +84,7 @@ Global logger: you can pass specific logger to decorator
      return response
 
 
-# Object-specific logger: to use object-specific logger define method 'get_logger'
+Object-specific logger: to use object-specific logger define method 'get_logger'
 
     class MyClass(object):
      def __init__(self):
