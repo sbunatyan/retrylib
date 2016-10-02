@@ -77,8 +77,9 @@ class RetryTestCase(base.TestCase):
         self.assertEqual(self._target.retry_count.call_count, 1)
 
     def test_dont_retry_on_unexpected_error(self):
-        """Don't retry if exception isn't SuperPuperException
-        """
+
+        """Don't retry if exception isn't SuperPuperException"""
+
         self.assertRaises(
             DontRetryException,
             self._target.retry_method_works_incorrect_2)
@@ -86,8 +87,9 @@ class RetryTestCase(base.TestCase):
 
     @mock.patch('time.sleep')
     def test_step_is_works(self, sleep):
-        """retry delay increases to step value
-        """
+
+        """Retry delay increases to step value"""
+
         self.assertRaises(
             SuperPuperException,
             self._target.retry_with_custom_step)
@@ -158,9 +160,8 @@ class LoggerTestCase(base.TestCase):
 
     @mock.patch('time.sleep')
     def test_object_logger_is_used(self, sleep):
-        """decorators.retry uses object's logger
 
-        """
+        """decorators.retry uses object's logger"""
 
         class TestClass(object):
             def __init__(self):
@@ -215,8 +216,8 @@ class LoggerTestCase(base.TestCase):
 
     @mock.patch('time.sleep')
     def test_works_if_get_logger_isnt_defined(self, sleep):
-        """decorators works if get_logger isn't defined
-        """
+
+        """decorators works if get_logger isn't defined"""
 
         class TestClass(object):
             def __init__(self):

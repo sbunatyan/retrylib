@@ -38,14 +38,17 @@ RETRY_HTTP_CODES = (http_client.REQUEST_TIMEOUT,
 
 
 def is_retriable_requests_httperror(error):
-    """Returns true error is retriable requests.exceptions.HTTPError
-    """
+
+    """Returns true if error is retriable requests.exceptions.HTTPError."""
+
     return (isinstance(error, requests.exceptions.HTTPError) and
             error.response.status_code in RETRY_HTTP_CODES)
 
 
 def is_network_failure(error):
+
     """Returns True when error is a network failure."""
+
     return ((isinstance(error, RETRY_URLLIB_EXCEPTIONS)
             and error.code in RETRY_HTTP_CODES) or
             isinstance(error, RETRY_HTTPLIB_EXCEPTIONS) or
