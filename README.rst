@@ -2,7 +2,7 @@ Library to make code more robust
 ================================
 
 Retry on specific exception
----------------------------
+----------------------------
 
   import retrylib
 
