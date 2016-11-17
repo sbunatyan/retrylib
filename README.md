@@ -5,8 +5,7 @@ Library to make code more robust
 
     import retrylib
 
-    @retrylib.decorators.retry(attempts_number=3,
-                            retry_on=(MyException,))
+    @retrylib.retry(attempts_number=3, retry_on=(MyException,))
     def reliable_function():
       raise MyException()
 
@@ -19,8 +18,7 @@ Library to make code more robust
     def is_my_mistake(error):
       return isinstance(error, MyMistake)
 
-    @retrylib.decorators.retry(attempts_number=3,
-                            retry_on=is_my_mistake)
+    @retrylib.retry(attempts_number=3, retry_on=is_my_mistake)
     def reliable_function():
       raise MyMistake()
 

@@ -18,6 +18,7 @@ import mock
 
 from retrylib.tests import base
 
+import retrylib
 from retrylib import decorators
 
 
@@ -38,7 +39,7 @@ class DontRetryException(Exception):
 
 class FakeClass(mock.Mock):
 
-    @decorators.retry(RETRY_ATTEMPTS, delay=0)
+    @retrylib.retry(RETRY_ATTEMPTS, delay=0)
     def retry_method_works_incorrect(self):
         self.retry_count()
         raise SuperPuperException()
@@ -49,7 +50,7 @@ class FakeClass(mock.Mock):
         self.retry_count()
         raise DontRetryException()
 
-    @decorators.retry(RETRY_ATTEMPTS, delay=0)
+    @retrylib.retry(RETRY_ATTEMPTS, delay=0)
     def retry_method_works_correct(self):
         self.retry_count()
 
