@@ -96,8 +96,8 @@ def retry(attempts_number, delay=0, step=0, retry_on=Exception, logger=None):
                     return func(*args, **kwargs)
                 except Exception as e:
                     if catch_strategy.need_to_retry(e):
-                        if attempts >= attempts_number or attempts_number < 0:
-                            raise
+                        if attempts >= attempts_number >= 0:
+                                raise
                         elif current_logger:
                             current_logger.warning(
                                 "Retry: Call to %(fn)s failed due to "

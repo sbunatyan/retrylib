@@ -19,10 +19,10 @@ from distutils import core
 core.setup(
     name='retrylib',
     packages=['retrylib'],
-    version='1.0.2',
+    version='1.0.3',
     description="Smart retry library",
     author="Sergey Bunatyan",
     author_email="sergey.bunatian@gmail.com",
     url="https://github.com/sbunatyan/retrylib",
-    download_url="https://github.com/sbunatyan/retrylib/tree/1.0.2",
+    download_url="https://github.com/sbunatyan/retrylib/tree/1.0.3",
     keywords=["retry", "retries"])
