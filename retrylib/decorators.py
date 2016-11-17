@@ -60,6 +60,7 @@ def retry(attempts_number, delay=0, step=0, retry_on=Exception, logger=None):
     """Reties function several times
 
     @param attempts_number: number of function calls (first call + retries)
+                            If attempts_number < -1 then retry infinitely
     @param delay: delay before first retry
     @param step: increment value of timeout on each retry
     @param retry_on: exception that should be handled or function that checks
@@ -90,12 +91,12 @@ def retry(attempts_number, delay=0, step=0, retry_on=Exception, logger=None):
             else:
                 catch_strategy = CatchExceptionStrategy(retry_on)
 
-            while attempts <= attempts_number:
+            while attempts <= attempts_number or attempts_number < 0:
                 try:
                     return func(*args, **kwargs)
                 except Exception as e:
                     if catch_strategy.need_to_retry(e):
-                        if attempts >= attempts_number:
+                        if attempts >= attempts_number or attempts_number < 0:
                             raise
                         elif current_logger:
                             current_logger.warning(
