@@ -14,15 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from distutils import core
+from setuptools import setup
 
-core.setup(
+setup(
     name='retrylib',
     packages=['retrylib'],
-    version='1.0.3',
+    version='1.0.4',
     description="Smart retry library",
     author="Sergey Bunatyan",
     author_email="sergey.bunatian@gmail.com",
     url="https://github.com/sbunatyan/retrylib",
-    download_url="https://github.com/sbunatyan/retrylib/tree/1.0.3",
-    keywords=["retry", "retries"])
+    download_url="https://github.com/sbunatyan/retrylib/tree/1.0.4",
+    keywords=["retry", "retries"],
+    install_requires=["requests", "six"])
