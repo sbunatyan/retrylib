@@ -16,11 +16,13 @@
 
 import functools
 import requests
+from requests import exceptions
 import socket
 from six.moves import http_client, urllib
 
 from retrylib import decorators
 from retrylib import defaults
+
 
 
 RETRY_SOCKET_EXCEPTIONS = (socket.error, socket.timeout)
@@ -29,7 +31,8 @@ RETRY_HTTPLIB_EXCEPTIONS = (http_client.BadStatusLine,
                             http_client.CannotSendRequest,
                             http_client.CannotSendHeader)
 RETRY_URLLIB_EXCEPTIONS = (urllib.error.HTTPError, )
-RETRY_REQUESTS_EXCEPTIONS = (requests.ConnectionError, requests.Timeout)
+RETRY_REQUESTS_EXCEPTIONS = (exceptions.ConnectionError,
+                             exceptions.Timeout)
 RETRY_HTTP_CODES = (http_client.REQUEST_TIMEOUT,
                     http_client.INTERNAL_SERVER_ERROR,
                     http_client.BAD_GATEWAY,
