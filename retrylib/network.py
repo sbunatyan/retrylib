@@ -24,7 +24,6 @@ from retrylib import decorators
 from retrylib import defaults
 
 
-
 RETRY_SOCKET_EXCEPTIONS = (socket.error, socket.timeout)
 RETRY_HTTPLIB_EXCEPTIONS = (http_client.BadStatusLine,
                             http_client.NotConnected,
@@ -60,14 +59,15 @@ def is_network_failure(error):
             is_retriable_requests_httperror(error))
 
 
-def retry(attempts_number=None, delay=None, step=0, retry_on=None,
-          logger=None):
+def retry(attempts_number=None, delay=None, step=0, max_delay=-1,
+          retry_on=None, logger=None):
 
     """Reties function several times on network failures
 
     @param attempts_number: number of function calls (first call + retries)
     @param delay: delay before first retry
     @param step: increment value of timeout on each retry
+    @param max_delay: maximum delay value
     @param retry_on: exception that should be handled or function that checks
                      if retry should be executed (default: Exception)
     @param logger: logger to write warnings
@@ -96,7 +96,8 @@ def retry(attempts_number=None, delay=None, step=0, retry_on=None,
                 retry_func = retry_on
 
             failover_func = decorators.retry(retry_attempts, retry_delay,
-                                             step, retry_func, logger)(func)
+                                             step, max_delay,
+                                             retry_func, logger)(func)
             return failover_func(*args, **kwargs)
 
         return wrapper

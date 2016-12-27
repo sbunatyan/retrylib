@@ -56,13 +56,15 @@ class CatchExceptionStrategy(CatchFunctionStrategy):
         return retry_exceptions
 
 
-def retry(attempts_number, delay=0, step=0, retry_on=Exception, logger=None):
+def retry(attempts_number, delay=0, step=0, max_delay=-1,
+          retry_on=Exception, logger=None):
     """Reties function several times
 
     @param attempts_number: number of function calls (first call + retries)
                             If attempts_number < -1 then retry infinitely
     @param delay: delay before first retry
     @param step: increment value of timeout on each retry
+    @param max_delay: maximum delay value
     @param retry_on: exception that should be handled or function that checks
                      if retry should be executed (default: Exception)
     @param logger: logger to write warnings
@@ -113,6 +115,8 @@ def retry(attempts_number, delay=0, step=0, retry_on=Exception, logger=None):
                         time.sleep(retry_delay)
                         attempts += 1
                         retry_delay += step
+                        if 0 <= max_delay < retry_delay:
+                            retry_delay = max_delay
                     else:
                         raise
         return wrapper

@@ -22,11 +22,10 @@ import retrylib
 from retrylib import decorators
 
 
-RETRY_ATTEMPTS = 3
-
+RETRY_ATTEMPTS = 5
 START_DELAY = 0
-
 STEP = 1
+MAX_DELAY = 2
 
 
 class SuperPuperException(Exception):
@@ -57,6 +56,12 @@ class FakeClass(mock.Mock):
     @decorators.retry(RETRY_ATTEMPTS, delay=START_DELAY,
                       step=STEP)
     def retry_with_custom_step(self):
+        self.retry_count()
+        raise SuperPuperException()
+
+    @decorators.retry(RETRY_ATTEMPTS, delay=START_DELAY,
+                      step=STEP, max_delay=MAX_DELAY)
+    def retry_with_max_delay(self):
         self.retry_count()
         raise SuperPuperException()
 
@@ -99,6 +104,21 @@ class RetryTestCase(base.TestCase):
             mock.call(START_DELAY + STEP)
         ])
 
+    @mock.patch('time.sleep')
+    def test_max_delay_works(self, sleep):
+
+        """Retry delay increases to step value"""
+
+        self.assertRaises(
+            SuperPuperException,
+            self._target.retry_with_max_delay)
+        sleep.assert_has_calls([
+            mock.call(START_DELAY),
+            mock.call(START_DELAY + STEP),
+            mock.call(MAX_DELAY),
+            mock.call(MAX_DELAY)
+        ])
+
     def test_retry_works_with_function_without_parameters(self):
         @decorators.retry(RETRY_ATTEMPTS, delay=0)
         def function_without_parameters():
@@ -139,7 +159,7 @@ class LoggerTestCase(base.TestCase):
                           bad_function,
                           counter)
 
-        self.assertEqual(counter.value, 3)
+        self.assertEqual(counter.value, RETRY_ATTEMPTS)
 
     @mock.patch('time.sleep')
     def test_predefined_logger_is_used(self, sleep):
