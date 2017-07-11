@@ -61,10 +61,10 @@ def retry(attempts_number, delay=0, step=0, max_delay=-1,
     """Reties function several times
 
     @param attempts_number: number of function calls (first call + retries)
-                            If attempts_number < -1 then retry infinitely
+                            If attempts_number < 0 then retry infinitely
     @param delay: delay before first retry
     @param step: increment value of timeout on each retry
-    @param max_delay: maximum delay value
+    @param max_delay: maximum delay value (upper bound for delay)
     @param retry_on: exception that should be handled or function that checks
                      if retry should be executed (default: Exception)
     @param logger: logger to write warnings
@@ -101,6 +101,9 @@ def retry(attempts_number, delay=0, step=0, max_delay=-1,
                         if attempts >= attempts_number >= 0:
                                 raise
                         elif current_logger:
+                            retry_count = "inf" if attempts_number < 0 \
+                                else attempts_number - 1
+
                             current_logger.warning(
                                 "Retry: Call to %(fn)s failed due to "
                                 "%(exc_class)s: %(exc)s, retry "
@@ -110,7 +113,7 @@ def retry(attempts_number, delay=0, step=0, max_delay=-1,
                                      exc=str(e),
                                      retry_no=attempts,
                                      exc_class=e.__class__.__name__,
-                                     retry_count=attempts_number - 1,
+                                     retry_count=retry_count,
                                      delay=retry_delay))
                         time.sleep(retry_delay)
                         attempts += 1

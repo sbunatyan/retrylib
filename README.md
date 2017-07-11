@@ -1,25 +1,42 @@
 Library to make code more robust
 [![Build Status](https://travis-ci.org/sbunatyan/retrylib.svg?branch=master)](https://travis-ci.org/sbunatyan/retrylib)
 
+# Retry decorator parameters
+
+
+retry(attempts_number, delay=0, step=0, max_delay=-1, retry_on=Exception, logger=None)
+
+* attempts_number: number of function calls (first call + retries). If attempts_number < 0 then retry infinitely
+* delay: delay before first retry
+* step: increment value of timeout on each retry
+* max_delay: maximum delay value (upper bound for delay)
+* retry_on: exception that should be handled or function that checks
+                     if retry should be executed (default: Exception)
+* logger: logger to write warnings
+
+returns the result of decorated function
+
+
+
 # Retry on specific exception
 
-    import retrylib
+  from retrylib.decorators import retry
 
-    @retrylib.retry(attempts_number=3, retry_on=(MyException,))
-    def reliable_function():
+  @retry(attempts_number=3, retry_on=(MyException,))
+  def function():
       raise MyException()
 
 
 # Use custom function
 
 
-    import retrylib
+  from retrylib.decorators import retry
 
-    def is_my_mistake(error):
-      return isinstance(error, MyMistake)
+  def is_my_exception(error):
+      return isinstance(error, MyException)
 
-    @retrylib.retry(attempts_number=3, retry_on=is_my_mistake)
-    def reliable_function():
+  @retry(attempts_number=3, retry_on=is_my_exception)
+  def function():
       raise MyMistake()
 
 
@@ -29,16 +46,16 @@ Library to make code more robust
 You can use following code to add retries for your custom network
 function:
 
-    import requests
-    import retrylib
+  import requests
+  from retrylib.network import retry
 
-    @retrylib.network.retry()
-    def reliable_function():
+  @retry()
+  def function():
      response = requests.get('http://localhost:5002')
      response.raise_for_status()
      return response
 
-    print reliable_function()
+  function()
 
 
 # Logging
@@ -48,6 +65,8 @@ Global logger: you can pass specific logger to decorator
 
     import logging
     import logging.config
+
+    from retrylib.network import retry
 
     LOGGING = {
       'version': 1,
@@ -75,14 +94,16 @@ Global logger: you can pass specific logger to decorator
 
     LOGGER = logging.getLogger(__name__)
 
-    @retrylib.network.retry(logger=LOGGER)
-    def reliable_function():
+    @retry(logger=LOGGER)
+    def function():
      response = requests.get('http://localhost:5002')
      response.raise_for_status()
      return response
 
 
 Object-specific logger: to use object-specific logger define method 'get_logger'
+
+    from retrylib.decorators import retry
 
     class MyClass(object):
      def __init__(self):
@@ -91,9 +112,10 @@ Object-specific logger: to use object-specific logger define method 'get_logger'
      def get_logger(self):
          return self._logger
 
-     @retrylib.network.retry()
+     @retry()
      def my_method(self):
-         pass
+         ...
+         raise Exception
 
     obj = MyClass()
     obj.my_method()
