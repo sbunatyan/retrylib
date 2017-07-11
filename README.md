@@ -20,24 +20,24 @@ returns the result of decorated function
 
 # Retry on specific exception
 
-  from retrylib.decorators import retry
+    from retrylib import retry
 
-  @retry(attempts_number=3, retry_on=(MyException,))
-  def function():
+    @retry(attempts_number=3, retry_on=(MyException,))
+    def function():
       raise MyException()
 
 
 # Use custom function
 
 
-  from retrylib.decorators import retry
+    from retrylib import retry
 
-  def is_my_exception(error):
+    def is_my_exception(error):
       return isinstance(error, MyException)
 
-  @retry(attempts_number=3, retry_on=is_my_exception)
-  def function():
-      raise MyMistake()
+    @retry(attempts_number=3, retry_on=is_my_exception)
+    def function():
+      raise MyException()
 
 
 # Retry on network errors
@@ -46,16 +46,16 @@ returns the result of decorated function
 You can use following code to add retries for your custom network
 function:
 
-  import requests
-  from retrylib.network import retry
+    import requests
+    from retrylib.network import retry
 
-  @retry()
-  def function():
+    @retry()
+    def function():
      response = requests.get('http://localhost:5002')
      response.raise_for_status()
      return response
 
-  function()
+    function()
 
 
 # Logging
@@ -103,7 +103,7 @@ Global logger: you can pass specific logger to decorator
 
 Object-specific logger: to use object-specific logger define method 'get_logger'
 
-    from retrylib.decorators import retry
+    from retrylib import retry
 
     class MyClass(object):
      def __init__(self):

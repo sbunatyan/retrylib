@@ -1,12 +1,12 @@
 Metadata-Version: 1.1
 Name: retrylib
-Version: 1.2.0
+Version: 1.2.1
 Summary: Smart retry library
 Home-page: https://github.com/sbunatyan/retrylib
 Author: Sergey Bunatyan
 Author-email: sergey.bunatian@gmail.com
 License: UNKNOWN
-Download-URL: https://github.com/sbunatyan/retrylib/tree/1.2.0
+Download-URL: https://github.com/sbunatyan/retrylib/tree/1.2.1
 Description: UNKNOWN
 Keywords: retry,retries
 Platform: UNKNOWN

@@ -1,3 +1,4 @@
+.pypirc
 .travis.yml
 AUTHORS
 ChangeLog

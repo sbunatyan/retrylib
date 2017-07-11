@@ -20,7 +20,7 @@ returns the result of decorated function
 Retry on specific exception
 ---------------------------
 
-  from retrylib.decorators import retry
+  from retrylib import retry
 
   @retry(attempts_number=3, retry_on=(MyException,))
   def function():
@@ -30,14 +30,14 @@ Retry on specific exception
 Use custom function
 -------------------
 
-  from retrylib.decorators import retry
+  from retrylib import retry
 
   def is_my_exception(error):
       return isinstance(error, MyException)
 
   @retry(attempts_number=3, retry_on=is_my_exception)
   def function():
-      raise MyMistake()
+      raise MyException()
 
 
 Retry on network errors
@@ -111,7 +111,7 @@ Object-specific logger
 
 To use object-specific logger define method 'get_logger'
 
-  from retrylib.decorators import retry
+  from retrylib import retry
 
 
   class MyClass(object):
