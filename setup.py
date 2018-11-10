@@ -19,12 +19,12 @@ from setuptools import setup
 setup(
     name='retrylib',
     packages=['retrylib'],
-    version='1.2.4',
+    version='1.2.5',
     description="Smart retry library",
     author="Sergey Bunatyan",
     author_email="sergey.bunatian@gmail.com",
     url="https://github.com/sbunatyan/retrylib",
-    download_url="https://github.com/sbunatyan/retrylib/tree/1.2.4",
+    download_url="https://github.com/sbunatyan/retrylib/tree/1.2.5",
     keywords=["retry", "retries"],
     license="Apache License 2.0",
     install_requires=["requests", "six"])
