@@ -14,7 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from os import path
 from setuptools import setup
+
+# read the contents of your README file
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README.md')) as f:
+    long_description = f.read()
 
 setup(
     name='retrylib',
@@ -27,4 +33,8 @@ setup(
     download_url="https://github.com/sbunatyan/retrylib/tree/1.2.5",
     keywords=["retry", "retries"],
     license="Apache License 2.0",
-    install_requires=["requests", "six"])
+    install_requires=["requests", "six"],
+    long_description=long_description,
+    long_description_content_type='text/markdown'
+
+)
