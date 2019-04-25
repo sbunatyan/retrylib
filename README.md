@@ -1,24 +1,31 @@
 Library to make code more robust
 [![Build Status](https://travis-ci.org/sbunatyan/retrylib.svg?branch=master)](https://travis-ci.org/sbunatyan/retrylib)
 
+
+# Installation
+Compatible with python 2.x and 3.x
+    
+    pip install retrylib
+
 # Retry decorator parameters
 
 
-retry(attempts_number, delay=0, step=0, max_delay=-1, retry_on=Exception, logger=None)
+    retry(attempts_number, delay=0, step=0, max_delay=-1, retry_on=Exception, logger=None)
 
-* attempts_number: number of function calls (first call + retries). If attempts_number < 0 then retry infinitely
-* delay: delay before first retry
-* step: increment value of timeout on each retry
-* max_delay: maximum delay value (upper bound for delay)
-* retry_on: exception that should be handled or function that checks
+* **attempts_number:** number of function calls (first call + retries). If attempts_number < 0 then retry infinitely
+* **delay**: delay before first retry
+* **step**: increment value of timeout on each retry
+* **max_delay**: maximum delay value (upper bound for delay)
+* **retry_on**: exception that should be handled or function that checks
                      if retry should be executed (default: Exception)
-* logger: logger to write warnings
+* **logger**: logger to write warnings
 
 returns the result of decorated function
 
 
 
 # Retry on specific exception
+
 
     from retrylib import retry
 

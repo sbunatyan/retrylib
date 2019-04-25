@@ -1,18 +1,25 @@
 Library to make code more robust
 ================================
 
+Installation
+------------
+Compatible with python 2.x and 3.x
+.. code-block:: bash
+
+    pip install retrylib
+
 Retry decorator parameters
 --------------------------
 
 retry(attempts_number, delay=0, step=0, max_delay=-1, retry_on=Exception, logger=None)
 
-* attempts_number: number of function calls (first call + retries). If attempts_number < 0 then retry infinitely
-* delay: delay before first retry
-* step: increment value of timeout on each retry
-* max_delay: maximum delay value (upper bound for delay)
-* retry_on: exception that should be handled or function that checks
+* **attempts_number**: number of function calls (first call + retries). If attempts_number < 0 then retry infinitely
+* **delay**: delay before first retry
+* **step**: increment value of timeout on each retry
+* **max_delay**: maximum delay value (upper bound for delay)
+* **retry_on**: exception that should be handled or function that checks
                      if retry should be executed (default: Exception)
-* logger: logger to write warnings
+* **logger**: logger to write warnings
 
 returns the result of decorated function
 
@@ -20,6 +27,7 @@ returns the result of decorated function
 Retry on specific exception
 ---------------------------
 
+.. code-block:: python
   from retrylib import retry
 
   @retry(attempts_number=3, retry_on=(MyException,))
@@ -29,6 +37,8 @@ Retry on specific exception
 
 Use custom function
 -------------------
+
+.. code-block:: python
 
   from retrylib import retry
 
@@ -45,6 +55,8 @@ Retry on network errors
 
 You can use following code to add retries for your custom network
 function:
+
+.. code-block:: python
 
   import requests
   from retrylib.network import retry
@@ -65,6 +77,8 @@ Global logger
 -------------
 
 You can pass specific logger to decorator:
+
+.. code-block:: python
 
   import logging
   import logging.config
@@ -108,8 +122,9 @@ You can pass specific logger to decorator:
 Object-specific logger
 ----------------------
 
-
 To use object-specific logger define method 'get_logger'
+
+.. code-block:: python
 
   from retrylib import retry
 
